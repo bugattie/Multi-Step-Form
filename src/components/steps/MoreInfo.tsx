@@ -2,14 +2,14 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
-import { FormField } from "./FormField";
+import FormField from "../fields/FormField";
 
-interface MoreInfo {
+interface MoreInfoValues {
   city: string;
   number: string;
 }
 
-const initialValues: MoreInfo = {
+const initialValues: MoreInfoValues = {
   city: "",
   number: "",
 };
@@ -24,7 +24,7 @@ const schema = Yup.object().shape({
 });
 
 export const MoreInfo = () => {
-  const submitForm = (values: MoreInfo): void => {
+  const submitForm = (values: MoreInfoValues): void => {
     console.log(JSON.stringify(values));
   };
   return (

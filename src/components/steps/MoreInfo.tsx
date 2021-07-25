@@ -1,7 +1,9 @@
 import React from "react";
 import { Formik, Form } from "formik";
+import Button from "@material-ui/core/Button";
 import * as Yup from "yup";
 
+import { useStyles } from "../../useStyle";
 import FormField from "../fields/FormField";
 
 interface MoreInfoValues {
@@ -15,34 +17,71 @@ const initialValues: MoreInfoValues = {
 };
 
 const schema = Yup.object().shape({
-  city: Yup.string().required("City is required."),
-  FirstName: Yup.number()
+  city: Yup.string().required("Required"),
+  number: Yup.number()
     .typeError("That doesn't look like a string")
-    .required("Phone number is required")
+    .required("Required")
     .integer("A phone number can't include a decimal point")
     .min(10),
 });
 
-export const MoreInfo = () => {
-  const submitForm = (values: MoreInfoValues): void => {
-    console.log(JSON.stringify(values));
+interface MoreInfoProps {
+  activeStep: number;
+  steps: Array<String>;
+  setActiveStep: Function;
+}
+
+export const MoreInfo: React.FC<MoreInfoProps> = ({
+  activeStep,
+  steps,
+  setActiveStep,
+}) => {
+  const classes = useStyles();
+
+  const handleNext = (values: MoreInfoValues) => {
+    console.log("check");
+    setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
+    console.log(values);
   };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep: number) => prevActiveStep - 1);
+  };
+
   return (
     <div>
       <Formik
-        initialValues={initialValues}
+        initialValues={{ ...initialValues }}
         validationSchema={schema}
-        onSubmit={submitForm}
+        onSubmit={handleNext}
       >
-        {({ dirty, isValid }) => {
-          return (
-            <Form autoComplete="off">
-              <FormField label="City" name="city" />
-              <br />
-              <FormField label="Phone Number" name="number" />
-            </Form>
-          );
-        }}
+        <>
+          <Form autoComplete="off">
+            <FormField label="City" name="city" />
+            <br />
+            <br />
+            <FormField label="Phone Number" name="number" />
+            <div className={classes.actionsContainer}>
+              <div>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  className={classes.button}
+                >
+                  Back
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  className={classes.button}
+                >
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </Button>
+              </div>
+            </div>
+          </Form>
+        </>
       </Formik>
     </div>
   );

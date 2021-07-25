@@ -32,7 +32,13 @@ function getStepContent(
         />
       );
     case 1:
-      return <MoreInfo />;
+      return (
+        <MoreInfo
+          activeStep={activeStep}
+          steps={steps}
+          setActiveStep={setActiveStep}
+        />
+      );
     case 2:
       return <Review />;
     default:

@@ -29,19 +29,22 @@ interface MoreInfoProps {
   activeStep: number;
   steps: Array<String>;
   setActiveStep: Function;
+  setFormValues: Function;
+  prevValues: Object;
 }
 
-export const MoreInfo: React.FC<MoreInfoProps> = ({
+const MoreInfo: React.FC<MoreInfoProps> = ({
   activeStep,
   steps,
   setActiveStep,
+  setFormValues,
+  prevValues,
 }) => {
   const classes = useStyles();
 
   const handleNext = (values: MoreInfoValues) => {
-    console.log("check");
     setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
-    console.log(values);
+    setFormValues({ ...prevValues, ...values });
   };
 
   const handleBack = () => {
@@ -86,3 +89,5 @@ export const MoreInfo: React.FC<MoreInfoProps> = ({
     </div>
   );
 };
+
+export default MoreInfo;

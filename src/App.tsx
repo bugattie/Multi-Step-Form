@@ -8,8 +8,8 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 
 import PersonalInfo from "./components/steps/PersonalInfo";
-import { MoreInfo } from "./components/steps/MoreInfo";
-import { Review } from "./components/steps/Review";
+import MoreInfo from "./components/steps/MoreInfo";
+import Review from "./components/steps/Review";
 import { useStyles } from "./useStyle";
 
 function getSteps() {
@@ -20,7 +20,9 @@ function getStepContent(
   step: number,
   activeStep: number,
   steps: Array<String>,
-  setActiveStep: Function
+  setActiveStep: Function,
+  setFormValues: Function,
+  formValues: Object
 ) {
   switch (step) {
     case 0:
@@ -29,6 +31,8 @@ function getStepContent(
           activeStep={activeStep}
           steps={steps}
           setActiveStep={setActiveStep}
+          setFormValues={setFormValues}
+          prevValues={formValues}
         />
       );
     case 1:
@@ -37,10 +41,12 @@ function getStepContent(
           activeStep={activeStep}
           steps={steps}
           setActiveStep={setActiveStep}
+          setFormValues={setFormValues}
+          prevValues={formValues}
         />
       );
     case 2:
-      return <Review />;
+      return <Review formValues={formValues} />;
     default:
       return "Unknown step";
   }
@@ -49,6 +55,7 @@ function getStepContent(
 export const App = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [formValues, setFormValues] = React.useState({});
   const steps = getSteps();
 
   const handleReset = () => {
@@ -63,7 +70,14 @@ export const App = () => {
             <StepLabel>{label}</StepLabel>
             <StepContent>
               <Typography>
-                {getStepContent(index, activeStep, steps, setActiveStep)}
+                {getStepContent(
+                  index,
+                  activeStep,
+                  steps,
+                  setActiveStep,
+                  setFormValues,
+                  formValues
+                )}
               </Typography>
             </StepContent>
           </Step>

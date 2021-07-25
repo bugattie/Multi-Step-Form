@@ -32,18 +32,22 @@ interface PersonalInfoProps {
   activeStep: number;
   steps: Array<String>;
   setActiveStep: Function;
+  setFormValues: Function;
+  prevValues: Object;
 }
 
 const PersonalInfo: React.FC<PersonalInfoProps> = ({
   activeStep,
   steps,
   setActiveStep,
+  setFormValues,
+  prevValues,
 }) => {
   const classes = useStyles();
 
   const handleNext = (values: PersonalInfoValues) => {
     setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
-    console.log(values);
+    setFormValues({ ...prevValues, ...values });
   };
 
   const handleBack = () => {

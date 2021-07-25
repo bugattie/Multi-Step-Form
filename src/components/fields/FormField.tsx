@@ -14,7 +14,7 @@ const FormField: React.FC<FormFieldProps> = ({ name, label }) => {
     ...field,
     label,
     fullWidth: true,
-    variant: "outlined" as "outlined",
+    variant: "standard" as "standard",
     error: false,
     helperText: "",
   };
@@ -24,7 +24,7 @@ const FormField: React.FC<FormFieldProps> = ({ name, label }) => {
     configTextfield.helperText = mata.error;
   }
 
-  return <TextField {...configTextfield} />;
+  return <TextField {...configTextfield} required />;
 };
 
 export default FormField;

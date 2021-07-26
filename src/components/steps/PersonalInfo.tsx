@@ -47,7 +47,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
 
   const handleNext = (values: PersonalInfoValues) => {
     setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
-    setFormValues({ ...prevValues, ...values });
+    setFormValues({ ...values });
   };
 
   const handleBack = () => {

@@ -44,7 +44,7 @@ const MoreInfo: React.FC<MoreInfoProps> = ({
 
   const handleNext = (values: MoreInfoValues) => {
     setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
-    setFormValues({ ...prevValues, ...values });
+    setFormValues(Object.assign(values, prevValues));
   };
 
   const handleBack = () => {

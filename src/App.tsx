@@ -3,8 +3,6 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import StepContent from "@material-ui/core/StepContent";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 
 import PersonalInfo from "./components/steps/PersonalInfo";
@@ -46,7 +44,14 @@ function getStepContent(
         />
       );
     case 2:
-      return <Review formValues={formValues} />;
+      return (
+        <Review
+          values={formValues}
+          activeStep={activeStep}
+          steps={steps}
+          setActiveStep={setActiveStep}
+        />
+      );
     default:
       return "Unknown step";
   }
@@ -57,10 +62,6 @@ export const App = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [formValues, setFormValues] = React.useState({});
   const steps = getSteps();
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
 
   return (
     <div className={classes.root}>
@@ -83,14 +84,6 @@ export const App = () => {
           </Step>
         ))}
       </Stepper>
-      {activeStep === steps.length && (
-        <Paper square elevation={0} className={classes.resetContainer}>
-          <Typography>All steps completed - you&apos;re finished</Typography>
-          <Button onClick={handleReset} className={classes.button}>
-            Reset
-          </Button>
-        </Paper>
-      )}
     </div>
   );
 };
